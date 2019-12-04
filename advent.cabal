@@ -1,0 +1,21 @@
+name:          advent
+version:       1.0.0
+build-type:    Simple
+cabal-version: >= 1.10
+
+library
+  exposed-modules:  Advent
+  hs-source-dirs:   src
+  default-language: Haskell2010
+  build-depends:    base
+   , base-prelude
+   , containers
+   , text
+
+executable advent-exe
+  main-is:          Main.hs
+  hs-source-dirs:   app
+  default-language: Haskell2010
+  build-depends:    base
+   , base-prelude
+   , advent
