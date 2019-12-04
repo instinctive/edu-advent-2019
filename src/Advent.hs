@@ -34,14 +34,16 @@ days =
 decimal :: Text -> Int
 decimal = either error fst . T.decimal
 
-day01 :: [Int] -> (Int,Int) -- {{{1
+-- https://adventofcode.com/2019/day/1/ {{{1
+day01 :: [Int] -> (Int,Int)
 day01 xx = (part1,part2) where
     part1 = foldl' (+) 0 (f <$> xx)
     part2 = foldl' (+) 0 (g <$> xx)
     f x = max 0 (div x 3 - 2)
     g x = foldl' (+) 0 (tail $ takeWhile (>0) $ iterate f x)
 
-day02 :: [Int] -> (Int,Int) -- {{{1
+-- https://adventofcode.com/2019/day/2/ {{{1
+day02 :: [Int] -> (Int,Int)
 day02 xx = 
     (part1,part2)
   where
