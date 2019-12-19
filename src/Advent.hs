@@ -13,6 +13,7 @@ import Data.Map.Strict (Map)
 import Data.Set (Set)
 import Data.Text (Text)
 import Linear.V2 (V2(..))
+import System.Directory
 import qualified Data.Map.Strict as M
 import qualified Data.Set        as S
 import qualified Data.Text       as T
@@ -23,19 +24,28 @@ import Day03 (day03)
 
 type Day = Text -> IO ()
 
-run :: Int -> Day -> IO () -- {{{1
-run i f = do
-    printf "Day %02d:\n" i
-    t <- T.readFile (printf "i/%02d" i)
-    f t
-
-days :: [ ( Int, Day ) ] -- {{{1
-days =
-    [ ( 1, print . day01 . map decimal . T.lines )
-    , ( 2, print . day02 . map decimal . T.splitOn "," )
-    , ( 3, print . day03 . T.lines )
-    , ( 4, print . day04 134564 . const 585159 )
+days :: Map String Day -- {{{1
+days = M.fromList
+    [ mk "01" $ day01 . map decimal . T.lines
+    , mk "02" $ day02 . map decimal . T.splitOn ","
+    , mk "03" $ day03 . T.lines
+    , mk "04" $ day04 134564 . const 585159
     ]
+  where
+    mk k f = (k, print . f)
+
+run :: String -> IO () -- {{{1
+run day = case M.lookup day days of
+    Nothing -> printf "Invalid day: %s\n" day
+    Just f ->
+        let path = printf "i/%s" day in
+        doesPathExist path >>= \case
+            False -> printf "No input file: %s\n" path
+            True -> do
+                printf "Day %s: " day
+                input <- T.readFile path
+                f input
+
 
 -- parsing helpers {{{1
 decimal :: Text -> Int
