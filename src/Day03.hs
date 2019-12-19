@@ -8,14 +8,12 @@ import Data.Map.Strict (Map)
 import Data.Set (Set)
 import Linear.V2 (V2(..))
 import Data.Text (Text)
-import Debug.Trace
 import qualified Data.Map.Strict as M
 import qualified Data.Set        as S
 import qualified Data.Text       as T
 import qualified Data.Text.Read  as T
 
-decimal :: Text -> Int
-decimal = either error fst . T.decimal
+import Utils
 
 type Loc = V2 Int
 data Dir = U | D | L | R deriving (Eq,Ord,Read,Show)
@@ -45,7 +43,6 @@ day03 raw = (part1,part2) where
         minimum . map (sum.abs) . S.elems $
         S.intersection (S.fromList aa) (S.fromList bb)
     part2 =
-        -- traceShow aa $ traceShow bb $
         minimum . M.elems $
         M.intersectionWith (+) (mk aa) (mk bb)
       where mk = M.fromListWith min . flip zip [1..]
