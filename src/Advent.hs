@@ -37,10 +37,11 @@ days = M.fromList
     , mk "03" $ day03 . T.lines
     , mk "04" $ day04 134564 . const 585159
     , mk "05" $ day05 . map signed . T.splitOn ","
-    , mk "06" $ day06 . map (T.splitOn ")") . T.lines
+    , mk "06" $ day06 . map (pair . T.splitOn ")") . T.lines
     ]
   where
     mk k f = (k, print . f)
+    pair [a,b] = (a,b)
 
 run :: String -> IO ()
 run day = case M.lookup day days of
