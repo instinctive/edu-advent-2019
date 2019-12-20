@@ -6,6 +6,7 @@ cabal-version: >= 1.10
 library
   exposed-modules:  Advent
   other-modules:    Utils
+   , IntCode
    , Day01
    , Day02
    , Day03
