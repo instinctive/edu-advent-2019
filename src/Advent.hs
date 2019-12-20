@@ -4,7 +4,6 @@
 
 module Advent where
 
--- imports
 import BasePrelude
 import Data.Map.Strict (Map)
 import Data.Text (Text)
@@ -12,7 +11,6 @@ import System.Directory
 import qualified Data.Map.Strict as M
 import qualified Data.Text       as T
 import qualified Data.Text.IO    as T
--- import qualified Data.Text.Read as T
 
 import Utils
 import Day01 (day01)
