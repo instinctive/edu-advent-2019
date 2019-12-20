@@ -24,15 +24,23 @@ intCode code input = go 0 codemap input [] where
             99 -> halt
             1 -> binop (+) addr
             2 -> binop (*) addr
+            3 -> read
+            4 -> write addr
+            5 -> jumpif id  addr
+            6 -> jumpif not addr
+            7 -> cmp ( <) addr
+            8 -> cmp (==) addr
             q -> Nothing
       where
         lookup = flip M.lookup m
         address Imm = Just
         address Pos = lookup
+        cmp op = binop (\a b -> bool 0 1 $ op a b)
         get :: [Int] -> Maybe [Int]
         get = mapM lookup
         halt :: Output
-        halt = (,o) <$> lookup 0
+        halt =
+            (,o) <$> lookup 0
         binop :: (Int -> Int -> Int) -> [Addr] -> Output
         binop op (x:y:_) = do
             a <- lookup (c+1) >>= address x
@@ -40,3 +48,18 @@ intCode code input = go 0 codemap input [] where
             r <- lookup (c+3)
             let m' = M.insert r (op a b) m
             go (c+4) m' i o
+        read :: Output
+        read = do
+            r <- lookup (c+1)
+            let (x:xx) = i
+            let m' = M.insert r x m
+            go (c+2) m' xx o
+        write :: [Addr] -> Output
+        write (x:_) = do
+            v <- lookup (c+1) >>= address x
+            go (c+2) m i (v:o)
+        jumpif :: (Bool -> Bool) -> [Addr] -> Output
+        jumpif f (x:y:_) = do
+            b <- lookup (c+1) >>= fmap (f . (/=0)) . address x
+            d <- lookup (c+2) >>= address y
+            go (if b then d else c+3) m i o

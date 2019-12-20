@@ -25,6 +25,7 @@ import Day01 (day01)
 import Day02 (day02)
 import Day03 (day03)
 import Day04 (day04)
+import Day05 (day05)
 
 type Day = Text -> IO ()
 
@@ -34,6 +35,7 @@ days = M.fromList
     , mk "02" $ day02 19690720 . map decimal . T.splitOn ","
     , mk "03" $ day03 . T.lines
     , mk "04" $ day04 134564 . const 585159
+    , mk "05" $ day05 . map signed . T.splitOn ","
     ]
   where
     mk k f = (k, print . f)
