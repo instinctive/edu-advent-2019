@@ -25,10 +25,10 @@ type Day = Text -> IO ()
 days :: Map String Day
 days = M.fromList
     [ mk "01" $ day01 . map decimal . T.lines
-    , mk "02" $ day02 19690720 . map decimal . T.splitOn ","
+    , mk "02" $ day02 19690720 . parseCode
     , mk "03" $ day03 . T.lines
     , mk "04" $ day04 134564 . const 585159
-    , mk "05" $ day05 . map signed . T.splitOn ","
+    , mk "05" $ day05 . parseCode
     , mk "06" $ day06 . map (pair . T.splitOn ")") . T.lines
     ]
   where
