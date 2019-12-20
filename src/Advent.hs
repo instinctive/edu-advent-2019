@@ -19,6 +19,7 @@ import Day03 (day03)
 import Day04 (day04)
 import Day05 (day05)
 import Day06 (day06)
+import Day07 (day07)
 
 type Day = Text -> IO ()
 
@@ -30,6 +31,7 @@ days = M.fromList
     , mk "04" $ day04 134564 . const 585159
     , mk "05" $ day05 . parseCode
     , mk "06" $ day06 . map (pair . T.splitOn ")") . T.lines
+    , mk "07" $ day07 . parseCode
     ]
   where
     mk k f = (k, print . f)
