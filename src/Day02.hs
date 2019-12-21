@@ -15,4 +15,4 @@ day02 magic xx = (part1,part2) where
         , b <- [0..99]
         , trial a b == Just magic ]
     z:_:_:zz = xx
-    trial a b = fst <$> intCode (z:a:b:zz) []
+    trial a b = let [Left o] = intCode (z:a:b:zz) [] in o
