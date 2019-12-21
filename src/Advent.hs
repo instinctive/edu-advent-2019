@@ -21,6 +21,7 @@ import Day05 (day05)
 import Day06 (day06)
 import Day07 (day07)
 import Day08 (day08)
+import Day09 (day09)
 
 type Day = Text -> IO ()
 
@@ -34,6 +35,7 @@ days = M.fromList
     , mk "06" $ day06 . map (pair . T.splitOn ")") . T.lines
     , mk "07" $ day07 . parseCode
     , (  "08" , out08 . day08 . T.chunksOf (25*6) )
+    , mk "09" $ day09 . parseCode
     ]
   where
     mk k f = (k, print . f)
