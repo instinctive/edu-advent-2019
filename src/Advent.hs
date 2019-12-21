@@ -33,11 +33,14 @@ days = M.fromList
     , mk "05" $ day05 . parseCode
     , mk "06" $ day06 . map (pair . T.splitOn ")") . T.lines
     , mk "07" $ day07 . parseCode
-    , mk "08" $ day08 . T.chunksOf (25*6)
+    , (  "08" , out08 . day08 . T.chunksOf (25*6) )
     ]
   where
     mk k f = (k, print . f)
     pair [a,b] = (a,b)
+    out08 o@(_,t) = print o >> traverse_ print (T.chunksOf 25 $ T.map f t) where
+        f '1' = '#'
+        f  q  = ' '
 
 run :: String -> IO ()
 run day = case M.lookup day days of

@@ -7,7 +7,9 @@ import Data.Text (Text)
 import qualified Data.Text as T
 
 day08 :: [Text] -> (Int,Text)
-day08 layers = traceShow (length layers, T.length <$> layers) (part1,part2) where
+day08 layers =
+    (part1,part2)
+  where
     part1 = count '1' zeros * count '2' zeros
     zeros = minimumBy (comparing $ count '0') layers
     count c = T.foldl' f 0 where f z d = if c == d then succ z else z
